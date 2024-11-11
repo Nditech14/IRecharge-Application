@@ -1,0 +1,235 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Azure B2C Swagger Smart",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/electricity/verify": {
+      "post": {
+        "tags": [
+          "Electricity"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/electricity/pay/{id}": {
+      "post": {
+        "tags": [
+          "Electricity"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/create": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/balance": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/fund": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "encoding": {
+                "amount": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/confirm-payment": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/withdraw": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "encoding": {
+                "amount": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/deactivate": {
+      "patch": {
+        "tags": [
+          "Wallet"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/wallet/reactivate": {
+      "patch": {
+        "tags": [
+          "Wallet"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateBillRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "description": "Oauth2.0 which uses AuthorizationCode flow",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://infiniondevb2c.b2clogin.com/infiniondevb2c.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signup_sign_in",
+            "tokenUrl": "https://infiniondevb2c.b2clogin.com/infiniondevb2c.onmicrosoft.com/oauth2/v2.0/token?p=B2C_1_signup_sign_in",
+            "scopes": {
+              "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.read": "Access API as read",
+              "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.write": "Access API as write",
+              "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.admin": "Access API as admin"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.read",
+        "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.write",
+        "https://infiniondevb2c.onmicrosoft.com/d8555888-1039-4fda-8969-a88b42b7a96b/app.admin"
+      ]
+    }
+  ]
+}
